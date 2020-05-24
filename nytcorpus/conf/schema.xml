@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+    New York Times Annotated Corpus.
+
+    @author Stuart Mackie (stuart@foobar.fyi).
+    @version May 2020.
+-->
+
+<schema name="nytcorpus" version="1.6">
+
+    <types>
+
+        <!-- String -->
+        <fieldType name="string" class="solr.StrField" indexed="true" stored="true" docValues="true" sortMissingLast="true" />
+        <fieldType name="strings" class="solr.StrField" indexed="true" stored="true" docValues="true" sortMissingLast="true" multiValued="true" />
+
+        <!-- Integer -->
+        <fieldType name="int" class="solr.IntPointField" indexed="true" stored="true" docValues="true" sortMissingLast="true" />
+        <fieldType name="ints" class="solr.IntPointField" indexed="true" stored="true" docValues="true" sortMissingLast="true" multiValued="true" />
+
+        <!-- Double -->
+        <fieldType name="double" class="solr.DoublePointField" indexed="true" stored="true" docValues="true" sortMissingLast="true" />
+        <fieldType name="doubles" class="solr.DoublePointField" indexed="true" stored="true" docValues="true" sortMissingLast="true" multiValued="true" />
+
+        <!-- Boolean -->
+        <fieldType name="bool" class="solr.BoolField" indexed="true" stored="true" sortMissingLast="true" />
+        <fieldType name="bools" class="solr.BoolField" indexed="true" stored="true" sortMissingLast="true" multiValued="true" />
+
+        <!-- Date (YYYY-MM-DDTHH:MM:SSZ) -->
+        <fieldType name="date" class="solr.DatePointField" indexed="true" stored="true" docValues="true" sortMissingLast="true" />
+        <fieldType name="dates" class="solr.DatePointField" indexed="true" stored="true" docValues="true" sortMissingLast="true" multiValued="true" />
+
+        <!-- Standard analyzer -->
+        <fieldType name="standard" class="solr.TextField" positionIncrementGap="100" multiValued="true">
+            <analyzer type="index">
+                <tokenizer class="solr.StandardTokenizerFactory" />
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+                <filter class="solr.LowerCaseFilterFactory" />
+            </analyzer>
+            <analyzer type="query">
+                <tokenizer class="solr.StandardTokenizerFactory" />
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+                <filter class="solr.LowerCaseFilterFactory" />
+            </analyzer>
+        </fieldType>
+
+    </types>
+
+    <!-- NYT corpus docid -->
+    <uniqueKey>guid</uniqueKey>
+    <field name="guid" type="string" required="true" />
+
+    <!-- NYT corpus document fields -->
+    <field name="alternateURL" type="string" />
+    <field name="articleAbstract" type="standard" />
+    <field name="authorBiography" type="standard" />
+    <field name="banner" type="string" />
+    <field name="biographicalCategories" type="strings" />
+    <field name="body" type="standard" />
+    <field name="byline" type="string" />
+    <field name="columnName" type="string" />
+    <field name="columnNumber" type="string" />
+    <field name="correctionDate" type="date" />
+    <field name="correctionText" type="standard" />
+    <field name="credit" type="string" />
+    <field name="dateline" type="standard" />
+    <field name="dayOfWeek" type="string" />
+    <field name="descriptors" type="strings" />
+    <field name="featurePage" type="string" />
+    <field name="generalOnlineDescriptors" type="strings" />
+    <field name="headline" type="standard" />
+    <field name="kicker" type="string" />
+    <field name="leadParagraph" type="standard" />
+    <field name="locations" type="strings" />
+    <field name="names" type="strings" />
+    <field name="newsDesk" type="string" />
+    <field name="normalizedByline" type="string" />
+    <field name="onlineDescriptors" type="strings" />
+    <field name="onlineHeadline" type="standard" />
+    <field name="onlineLeadParagraph" type="standard" />
+    <field name="onlineLocations" type="strings" />
+    <field name="onlineOrganizations" type="strings" />
+    <field name="onlinePeople" type="strings" />
+    <field name="onlineSection" type="string" />
+    <field name="onlineTitles" type="standard" />
+    <field name="organizations" type="strings" />
+    <field name="page" type="string" />
+    <field name="people" type="strings" />
+    <field name="publicationDate" type="date" />
+    <field name="publicationDayOfMonth" type="string" />
+    <field name="publicationMonth" type="string" />
+    <field name="publicationYear" type="string" />
+    <field name="section" type="string" />
+    <field name="seriesName" type="string" />
+    <field name="slug" type="string" />
+    <field name="sourceFile" type="string" />
+    <field name="taxonomicClassifiers" type="strings" />
+    <field name="titles" type="standard" />
+    <field name="typesOfMaterial" type="strings" />
+    <field name="url" type="string" />
+    <field name="wordCount" type="int" default="0" />
+
+    <!-- Default search field -->
+    <field name="_text_" type="standard" indexed="true" stored="false" multiValued="true" />
+    <copyField source="articleAbstract" dest="_text_" />
+    <copyField source="authorBiography" dest="_text_" />
+    <copyField source="body" dest="_text_" />
+    <copyField source="correctionText" dest="_text_" />
+    <copyField source="dateline" dest="_text_" />
+    <copyField source="headline" dest="_text_" />
+    <copyField source="leadParagraph" dest="_text_" />
+    <copyField source="onlineHeadline" dest="_text_" />
+    <copyField source="onlineLeadParagraph" dest="_text_" />
+    <copyField source="onlineTitles" dest="_text_" />
+    <copyField source="titles" dest="_text_" />
+
+</schema>

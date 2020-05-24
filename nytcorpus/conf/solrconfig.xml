@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+    New York Times Annotated Corpus.
+
+    @author Stuart Mackie (stuart@foobar.fyi).
+    @version May 2020.
+-->
+
+<config>
+
+  <!-- Lucene -->
+  <luceneMatchVersion>8.5.0</luceneMatchVersion>
+
+  <!-- "schema.xml" -->
+  <schemaFactory class="ClassicIndexSchemaFactory" />
+
+  <!-- "/select" -->
+  <requestHandler name="/select" class="solr.SearchHandler">
+    <lst name="defaults">
+      <str name="echoParams">all</str>
+      <str name="df">_text_</str>
+      <int name="rows">10</int>
+    </lst>
+  </requestHandler>
+
+</config>
